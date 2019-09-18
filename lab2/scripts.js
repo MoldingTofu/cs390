@@ -37,6 +37,8 @@ search.addEventListener('input', e => {
 let deleteButton = document.getElementById('deleteButton');
 deleteButton.addEventListener('click', () => {
     tasks = tasks.filter(task => !task.selected);
+    numSelected = 0;
+    deleteButton.className = 'btn btn-outline-dark';
     updateTasks(tasks);
 })
 
@@ -61,7 +63,7 @@ function updateTasks(list) {
                 tasks.filter(task => task.id == card.id).map(task => task.selected = false);
                 numSelected -= 1;
             }
-
+            console.log(numSelected);
             let button = document.getElementById('deleteButton');
             if (numSelected == 0) {
                 button.className = 'btn btn-outline-dark';
