@@ -53,13 +53,13 @@ function updateTasks(list) {
     let selected = taskBar.childNodes;
     selected.forEach( card => {
         card.addEventListener('click', () => {
-            if (card.className == 'card') {
-                card.className = 'card text-white bg-danger';
+            if (card.className == 'card card-body') {
+                card.className = 'card card-body text-white bg-danger';
                 tasks.filter(task => task.id == card.id).map(task => task.selected = true);
                 numSelected += 1;
             }
             else {
-                card.className = 'card';
+                card.className = 'card card-body';
                 tasks.filter(task => task.id == card.id).map(task => task.selected = false);
                 numSelected -= 1;
             }
@@ -97,10 +97,10 @@ function createCard(task) {
     text.className = 'card-text mb-3';
     newTask.id = task.id;
     if (task.selected) {
-        newTask.className = 'card text-white bg-danger';
+        newTask.className = 'card card-body text-white bg-danger';
     }
     else {
-        newTask.className = 'card';
+        newTask.className = 'card card-body';
     }
 
     newTask.appendChild(title);
