@@ -87,15 +87,24 @@ function clearTasks() {
 function createCard(task) {
     let taskBar = document.getElementById('notecardList');
     let newTask = document.createElement('div');
-    let title = document.createElement('h1');
-    let text = document.createElement('h2');
+    let title = document.createElement('h5');
+    let text = document.createElement('p');
 
     title.innerHTML = task.title;
     text.innerHTML = task.text;
-    newTask.className = 'card';
+
+    title.className = 'card-title mb-3';
+    text.className = 'card-text mb-3';
+    newTask.id = task.id;
+    if (task.selected) {
+        newTask.className = 'card text-white bg-danger';
+    }
+    else {
+        newTask.className = 'card';
+    }
+
     newTask.appendChild(title);
     newTask.appendChild(text);
-    newTask.id = task.id;
 
     return newTask;
 }
