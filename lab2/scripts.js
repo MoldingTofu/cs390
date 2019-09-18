@@ -4,11 +4,20 @@ var tasks = [];
 var numSelected = 0;
 
 /* constructor for a task */
-function Task(title, text) {
-    this.id = tasks.length;
-    this.title = title;
-    this.text = text;
-    this.selected = false;
+// function Task(title, text) {
+//     this.id = tasks.length;
+//     this.title = title;
+//     this.text = text;
+//     this.selected = false;
+// }
+
+function task(title, text) {
+    return {
+        'title': title,
+        'text': text,
+        'id': tasks.length,
+        'selected': false
+    }
 }
 
 /* handles creation of a task card */
@@ -16,7 +25,7 @@ let submit = document.getElementById('submitButton');
 submit.addEventListener('click', () => {
     let title = document.getElementById('titleInput').value;
     let text = document.getElementById('inputArea').value;
-    tasks.unshift(new Task(title, text));
+    tasks.unshift(task(title, text));
     updateTasks(tasks);
 });
 
