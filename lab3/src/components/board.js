@@ -18,14 +18,28 @@ class Board extends Component {
       Part 1:
       Add appropriate state values
       */
+      gameOver: false,
+      board: [[]],
+      currPlayer: player1
     };
+
+    this.placeToken = this.placeToken.bind(this);
   }
-  
+
   createBoard() {
     /*
     Part 1:
     Initialize board with null values
     */
+    let newBoard = Array(rows);
+    for (let i = 0; i < newBoard.length; i++) {
+        newBoard[i] = new Array(cols).fill(null);
+    }
+    this.setState({
+        gameOver: false,
+        board: newBoard,
+        currPlayer: player1
+    });
   }
 
   placeToken(col) {
@@ -36,6 +50,21 @@ class Board extends Component {
       Part 3:
       Place the token in the appropriate column, update the current player and update the state accordingly
       */
+
+      for (let i = newBoard.length - 1; i >= 0; i--) {
+          if (newBoard[i][col] == null) {
+            newBoard[i][col] = currPlayer;
+            break;
+          }
+      }
+
+      console.log(newBoard);
+
+      this.setState({
+          gameOver: this.checkTable(newBoard),
+          board: newBoard,
+          currPlayer: currPlayer == player1 ? player2 : player1
+      });
     }
   }
 
@@ -54,8 +83,28 @@ class Board extends Component {
     return false;
   }
 
+  checkDiagonal(table) {
+      for (let i = 0; i < table.length - 3; i++) {
+          for (let j = 0; j < table[i].length - 3; j++) {
+              if (table[i][j] != null && table[i][j] == table[i+1][j+1] && table[i][j] == table[i+2][j+2] && table[i][j] == table[i+3][j+3]) {
+                return true;
+              }
+          }
+      }
+
+      for (let i = 0; i < table.length - 3; i++) {
+          for (let j = 3; j < table[i].length; j++) {
+              if (table[i][j] != null && table[i][j] == table[i+1][j-1] && table[i][j] == table[i+2][j-2] && table[i][j] == table[i+3][j-3]) {
+                return true;
+              }
+          }
+      }
+
+      return false;
+  }
+
   checkTable(table) {
-    return this.checkRows(table) || this.checkColumns(table);
+    return this.checkRows(table) || this.checkColumns(table) || this.checkDiagonal(table);
   }
 
   componentDidMount() {
@@ -66,7 +115,7 @@ class Board extends Component {
     const { board, gameOver } = this.state;
     /*
     Part 4:
-    End the game if a player wins 
+    End the game if a player wins
     */
   }
 
@@ -100,8 +149,9 @@ class Board extends Component {
                 Part 2:
                 Map rows in board to individual Row components with the .map function.
                 Make sure to pass placeToken function so that the child component can call the function
-              */}
-              <Tile/>
+              */
+                this.state.board.map((row) => <Row row={row} placeToken={this.placeToken}/>)
+              }
             </tbody>
           </Table>
           <h2 className={`flex justify-center w-20 ${playerColor}`}>
