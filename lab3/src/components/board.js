@@ -53,18 +53,17 @@ class Board extends Component {
 
       for (let i = newBoard.length - 1; i >= 0; i--) {
           if (newBoard[i][col] == null) {
-            newBoard[i][col] = currPlayer;
-            break;
+              newBoard[i][col] = currPlayer;
+
+              /* so players cannot place outside the board lol */
+              this.setState({
+                  gameOver: this.checkTable(newBoard),
+                  board: newBoard,
+                  currPlayer: currPlayer == player1 ? player2 : player1
+              });
+              return;
           }
       }
-
-      console.log(newBoard);
-
-      this.setState({
-          gameOver: this.checkTable(newBoard),
-          board: newBoard,
-          currPlayer: currPlayer == player1 ? player2 : player1
-      });
     }
   }
 
@@ -112,11 +111,16 @@ class Board extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const { board, gameOver } = this.state;
+    const { board, gameOver, currPlayer } = this.state;
     /*
     Part 4:
     End the game if a player wins
     */
+    if (!gameOver){
+        if (this.checkTable(board)) {
+            this.setState({gameOver: true});
+        }
+    }
   }
 
   render() {
