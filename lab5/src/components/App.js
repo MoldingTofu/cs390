@@ -2,7 +2,10 @@ import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav } from "react-bootstrap";
 import "../index.css";
-import { Link } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
+import Search from "./search"
+import History from "./history"
+import NotFound from "./notfound"
 
 class App extends React.Component {
   render() {
@@ -18,6 +21,11 @@ class App extends React.Component {
             </Nav>
           </Navbar.Collapse>
         </Navbar>
+        <Switch>
+          <Route exact path='/search' component={Search}/>
+          <Route exact path='/history' component={History}/>
+          <Route component={NotFound} />
+        </Switch>
         <div id="mainContent">
           <h1>Welcome to the Lab 5 Home Page</h1>
           <br></br>

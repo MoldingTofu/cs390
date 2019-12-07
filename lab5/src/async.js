@@ -13,14 +13,32 @@ export function searchCall() {
 
   let requestURL = "https://swapi.co/api/people/?search=" + characterName;
 
-  //These might be useful with some data ;)
-  document.getElementById("cardName").innerHTML = "Name";
+  axios.get(requestURL)
+    .then(function(res) {
+      if (res.data.results.length == 0) {
+        handleEmptyQuery();
+      } else {
+        handleQuery(res.data.results[0]);
+      }
+    })
+    .catch(function(err) {
+      console.log(err)
+    })
+}
+
+function handleEmptyQuery() {
+  document.getElementById("cardName").innerHTML = "No charcter found.";
+  document.getElementById("cardText").innerHTML = `Try another search!`;
+}
+
+function handleQuery(query) {
+  document.getElementById("cardName").innerHTML = query.name;
   document.getElementById("cardText").innerHTML = `
-        Birth Year: birth_year <br/>
-        Gender: gender <br/>
-        Height: height <br/>
-        Weight: mass <br/>
-        Hair Color: hair_color <br/>
-        Eye Color: eye_color <br/>
+        Birth Year: ${query.birth_year} <br/>
+        Gender: ${query.gender} <br/>
+        Height: ${query.height} <br/>
+        Weight: ${query.mass} <br/>
+        Hair Color: ${query.hair_color} <br/>
+        Eye Color: ${query.eye_color} <br/>
     `;
 }

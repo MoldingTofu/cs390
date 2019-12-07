@@ -5,6 +5,7 @@ import App from "./components/App";
 import History from "./components/history";
 import Search from "./components/search";
 import { Provider } from "react-redux";
+import NotFound from './components/notfound'
 
 const Routing = ({ store }) => {
   return (
@@ -13,18 +14,9 @@ const Routing = ({ store }) => {
         <div id="">
           <Switch>
           <Route component={App} />
-          {/**
-           * TODO: create Routes using <Route /> for the History, and Search components
-           */}
-           <Route path="/">
-             <App />
-           </Route>
-           <Route path="/search">
-             <Search />
-           </Route>
-           <Route path="/history">
-             <History />
-           </Route>
+            <Route exact path='/search' component={Search}/>
+            <Route exact path='/history' component={History}/>
+            <Route component={NotFound} />
           </Switch>
         </div>
       </Router>
